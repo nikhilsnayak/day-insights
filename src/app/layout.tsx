@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
-import './globals.css';
+
 import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/ui/sonner';
+
+import './globals.css';
 
 const poppins = Poppins({
   weight: ['400', '600', '700', '800', '900'],
@@ -18,8 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className={cn(poppins.className, 'antialiased')}>{children}</body>
+    <html lang='en' className='no-scrollbar'>
+      <body className={cn(poppins.className, 'antialiased')}>
+        {children}
+        <Toaster closeButton />
+      </body>
     </html>
   );
 }

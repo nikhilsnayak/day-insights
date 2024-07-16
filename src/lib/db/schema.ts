@@ -1,12 +1,16 @@
+import { relations } from 'drizzle-orm';
 import {
   boolean,
-  timestamp,
-  pgTable,
-  text,
-  primaryKey,
   integer,
+  pgEnum,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
 } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from 'next-auth/adapters';
+
+import { sourceTypes } from '../constants';
 
 export const users = pgTable('user', {
   id: text('id')
@@ -84,3 +88,54 @@ export const authenticators = pgTable(
     }),
   })
 );
+
+export const insights = pgTable('insight', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text('name').notNull(),
+  description: text('description').notNull(),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+});
+
+export const sourceType = pgEnum('sourceType', sourceTypes);
+
+export const sources = pgTable('source', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  type: sourceType('type').notNull(),
+  value: text('value').notNull(),
+  insightId: text('insightId')
+    .notNull()
+    .references(() => insights.id, { onDelete: 'cascade' }),
+});
+
+export const usersRelations = relations(users, ({ many }) => ({
+  insights: many(insights),
+  accounts: many(accounts),
+}));
+
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}));
+
+export const insightsRelations = relations(insights, ({ many, one }) => ({
+  sources: many(sources),
+  user: one(users, {
+    fields: [insights.userId],
+    references: [users.id],
+  }),
+}));
+
+export const sourcesRelations = relations(sources, ({ one }) => ({
+  insight: one(insights, {
+    fields: [sources.insightId],
+    references: [insights.id],
+  }),
+}));
