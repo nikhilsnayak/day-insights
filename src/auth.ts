@@ -4,28 +4,21 @@ import NextAuth from 'next-auth';
 
 import authConfig from './auth.config';
 import { db } from './lib/db';
+import { dashboards } from './lib/db/schema';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
   session: { strategy: 'jwt' },
-  ...authConfig,
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        return { ...token, id: user.id };
+  events: {
+    async signIn({ isNewUser, user }) {
+      if (isNewUser && user.id) {
+        await db.insert(dashboards).values({
+          userId: user.id,
+        });
       }
-      return token;
-    },
-    session: ({ session, token }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id as string,
-        },
-      };
     },
   },
+  ...authConfig,
 });
 
 export async function getLoggedInUser() {

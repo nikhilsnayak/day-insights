@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Trash2 } from 'lucide-react';
+import { SiYoutube } from '@icons-pack/react-simple-icons';
 
 import { getAllInsights } from '@/lib/queries/insights';
 import { Button } from '@/components/ui/button';
@@ -38,9 +38,20 @@ export default async function InsightsPage() {
                 <ul className='space-y-2'>
                   {insight.sources.map((source) => {
                     return (
-                      <li key={source.id} className='text-sm'>
-                        <p>Type: {source.type}</p>
-                        <p>Value: {source.value}</p>
+                      <li key={source.id}>
+                        <Button
+                          asChild
+                          variant='link'
+                          className='text-sm flex gap-2 w-fit p-0'
+                        >
+                          <a
+                            href={`https://youtube.com/${source.value}`}
+                            target='_blank'
+                          >
+                            <SiYoutube className='text-red-600' />
+                            {source.value}
+                          </a>
+                        </Button>
                       </li>
                     );
                   })}

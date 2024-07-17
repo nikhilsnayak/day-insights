@@ -46,7 +46,7 @@ type InsightFormProps = CreateInsightFormProps | UpdateInsightFormProps;
 export function InsightForm(props: InsightFormProps) {
   const { type, defaultValues } = props;
   const form = useForm<InsightFormData>({
-    resolver: zodResolver(InsightFormDataSchema.omit({})),
+    resolver: zodResolver(InsightFormDataSchema),
     defaultValues,
   });
 
@@ -100,7 +100,7 @@ export function InsightForm(props: InsightFormProps) {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder='New Insight' {...field} />
+                  <Input placeholder='Enter a unique name' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -114,7 +114,7 @@ export function InsightForm(props: InsightFormProps) {
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='This the description of my insight'
+                    placeholder='Describe the purpose or goal'
                     {...field}
                   />
                 </FormControl>
@@ -140,7 +140,7 @@ export function InsightForm(props: InsightFormProps) {
                     name={`sources.${index}.type`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Type</FormLabel>
+                        <FormLabel>Source Type</FormLabel>
                         <FormControl>
                           <Select
                             onValueChange={field.onChange}
@@ -148,7 +148,7 @@ export function InsightForm(props: InsightFormProps) {
                           >
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder='Select a source type' />
+                                <SelectValue placeholder='Choose a source type' />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
@@ -208,9 +208,9 @@ function SourceValue({ index }: { index: number }) {
           name={`sources.${index}.value`}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Value</FormLabel>
+              <FormLabel>YouTube Username</FormLabel>
               <FormControl>
-                <Input placeholder='Enter value' {...field} />
+                <Input placeholder='Enter the YouTube username' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

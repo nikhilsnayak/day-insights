@@ -113,9 +113,22 @@ export const sources = pgTable('source', {
     .references(() => insights.id, { onDelete: 'cascade' }),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const dashboards = pgTable('dashboard', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  createInsight: boolean('createInsight').notNull().default(true),
+  viewInsights: boolean('viewInsights').notNull().default(true),
+  viewProfile: boolean('viewProfile').notNull().default(true),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+});
+
+export const usersRelations = relations(users, ({ many, one }) => ({
   insights: many(insights),
   accounts: many(accounts),
+  dashboard: one(dashboards),
 }));
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
@@ -137,5 +150,12 @@ export const sourcesRelations = relations(sources, ({ one }) => ({
   insight: one(insights, {
     fields: [sources.insightId],
     references: [insights.id],
+  }),
+}));
+
+export const dashboardsRelations = relations(dashboards, ({ one }) => ({
+  user: one(users, {
+    fields: [dashboards.userId],
+    references: [users.id],
   }),
 }));

@@ -8,6 +8,20 @@
       "when": 1721052843880,
       "tag": "0000_loose_jubilee",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1721195298525,
+      "tag": "0001_bored_jimmy_woo",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1721199073006,
+      "tag": "0002_outgoing_ravenous",
+      "breakpoints": true
     }
   ]
 }
