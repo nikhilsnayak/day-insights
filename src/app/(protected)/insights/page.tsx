@@ -19,7 +19,7 @@ export default async function InsightsPage() {
 
   return (
     <section className='space-y-8'>
-      <h1 className='text-3xl md:text-4xl font-bold'>My Insights</h1>
+      <h2 className='text-3xl md:text-4xl font-bold'>My Insights</h2>
       {!insights || insights.length === 0 ? (
         <p>No insights</p>
       ) : (

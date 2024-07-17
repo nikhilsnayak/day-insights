@@ -19,7 +19,7 @@ export function InsightLink({
     <Button
       asChild
       className={cn(
-        'flex h-[200px] 2xl:h-[250px] flex-col gap-3 py-10 whitespace-normal',
+        'flex h-[20vh]  flex-col gap-3 py-10 whitespace-normal',
         className
       )}
       {...rest}

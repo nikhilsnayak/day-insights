@@ -1,8 +1,7 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
-
 import { getUserInfo } from '@/lib/queries/users';
 import { toTitleCase } from '@/lib/utils';
 
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 

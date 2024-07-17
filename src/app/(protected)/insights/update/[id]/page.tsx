@@ -12,9 +12,9 @@ export default async function UpdateInsight({
   const insight = await getInsightById(id);
   return (
     <section className='mx-auto max-w-screen-md space-y-8 rounded-md border p-4 shadow-sm hover:shadow-md md:p-8'>
-      <h1 className='text-center text-xl font-bold tracking-tighter'>
+      <h2 className='text-center text-xl font-bold tracking-tighter'>
         Update Insight
-      </h1>
+      </h2>
       <InsightForm defaultValues={insight} type='update' insightId={id} />
     </section>
   );
